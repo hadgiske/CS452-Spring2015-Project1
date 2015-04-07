@@ -1,3 +1,14 @@
-name, date, description
-
-be sure to include complete details of how to interact with your game, the scoring system, and how to win
+/*
+/* Katie Hadgis, CS452, Project 1, 04/07/15
+/* 
+/* Game Rules:
+/*    - You control the black square
+/*	  - Move using arrows keys
+/*	  - Try and get the colored squares (fruits)
+/*	  - Each color is worth a different amount of points
+/*	  - Avoid the falling grey squares (rain) or else game over!
+/*
+/* Notes: 
+/*	  - Model view matrix indicates when player is attempting to move out of bounds.
+/*	  - Game reset doesn't work very well, refresh to start a new game for best results.
+/* */
