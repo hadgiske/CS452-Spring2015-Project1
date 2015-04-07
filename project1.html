@@ -13,50 +13,63 @@
 	text-align: center;
 }
 </style>
-<script id="player-vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vPosition;
-uniform float xtrans;
-uniform float ytrans;
-void main()
-{
-    gl_Position.x = vPosition.x + xtrans;
-    gl_Position.y = vPosition.y + ytrans;
-    gl_Position.z = 0.0;
-    gl_Position.w = 1.0;
-}
+<script id="vertex-shader2" type="x-shader/x-vertex">
+/*
+/* Katie Hadgis, CS452, Project 1, 04/07/15
+/* 
+/* Game Rules:
+/*    - You control the black square
+/*	  - Move using arrows keys
+/*	  - Try and get the colored squares (fruits)
+/*	  - Each color is worth a different amount of points
+/*	  - Avoid the falling grey squares (rain) or else game over!
+/*
+/* Notes: 
+/*	  - Model view matrix indicates when player is attempting to move out of bounds.
+/*	  - Game reset doesn't work very well, refresh to start a new game for best results.
+/* */
+	attribute vec4 vPosition2;
+	uniform mat4 modelViewMatrix;
+	void main(){
+		gl_Position = modelViewMatrix * vec4( vPosition2.x, vPosition2.y, 0.0, 0.05);
+	}
+</script>
+<script id="fragment-shader2" type="x-shader/x-fragment">
+	precision mediump float;
+	void main(){
+		gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+	}
+</script>
+<script id="vertex-shader" type="x-shader/x-vertex">
+	attribute vec4 vPosition;
+	uniform float UXtrans;
+	uniform float UYtrans;
+	uniform mat4 modelViewMatrix;
+	attribute vec4 vColor;
+	varying vec4 fColor;
+	void main()
+	{
+
+		gl_Position = modelViewMatrix * vec4(vPosition.x + UXtrans, vPosition.y + UYtrans, 0.0, 1.0);
+
+		fColor = vColor;
+	}
 </script>
 
-<script id="player-fragment-shader" type="x-shader/x-fragment">
-precision mediump float;
-
-void main()
-{
-    gl_FragColor = vec4( 0.0, 0.0, 0.0, 1.0 );
-}
-</script>
-
-<script id="fruit-vertex-shader" type="x-shader/x-vertex">
-attribute vec4 vFruitPosition;
-
-void main()
-{
-	gl_Position = vFruitPosition;
-}
-</script>
-
-<script id="fruit-fragment-shader" type="x-shader/x-fragment">
-precision mediump float;
-
-void main()
-{
-    gl_FragColor = vec4( 0.0, 0.0, 0.0, 1.0 );
-}
+<script id="fragment-shader" type="x-shader/x-fragment">
+	precision mediump float;
+	varying vec4 fColor;
+	
+	void main()
+	{
+		gl_FragColor = fColor;
+	}
 </script>
 
 <script type="text/javascript" src="Common/webgl-utils.js"></script>
 <script type="text/javascript" src="Common/initShaders.js"></script>
 <script type="text/javascript" src="Common/MV.js"></script>
-<script type="text/javascript" src="project1.js"></script>
+<script type="text/javascript" src="lab4_c.js"></script>
 </head>   
 
 <body>
@@ -66,5 +79,6 @@ Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
 </br>
 <button id = "ButtonT">Pause</button>
+<p id="score">Score: <b></b></p>
 </body>
 </html>
